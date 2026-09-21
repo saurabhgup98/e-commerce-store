@@ -1,0 +1,59 @@
+<div class="page container">
+  <a routerLink="/products" class="back-link">&larr; Back to products</a>
+
+  @if (product(); as product) {
+    <div class="detail-layout">
+      <div class="detail-image">
+        <span class="placeholder-thumb">{{ product.name.charAt(0) }}</span>
+      </div>
+
+      <div class="detail-body">
+        <p class="category">{{ categoryLabels[product.category] }}</p>
+        <h1>{{ product.name }}</h1>
+        <p class="price">{{ product.price | currency: 'INR' : 'symbol' : '1.0-0' }}</p>
+        <p class="description">{{ product.description }}</p>
+
+        @if (product.specs && (product.specs | keyvalue).length > 0) {
+          <table class="specs-table">
+            <tbody>
+              @for (spec of product.specs | keyvalue; track spec.key) {
+                <tr>
+                  <th>{{ spec.key }}</th>
+                  <td>{{ spec.value }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        <div class="detail-actions">
+          <button type="button" class="btn-secondary" [class.active]="favourites.isFavourite(product._id)" (click)="toggleFavourite()">
+            {{ favourites.isFavourite(product._id) ? '♥ Favourited' : '♡ Add to favourites' }}
+          </button>
+          <button type="button" class="btn-secondary" [class.active]="compare.isSelected(product._id)" (click)="toggleCompare()">
+            {{ compare.isSelected(product._id) ? '✓ In compare' : '+ Add to compare' }}
+          </button>
+        </div>
+
+        @if (compareMessage()) {
+          <p class="form-error">{{ compareMessage() }}</p>
+        }
+
+        <div class="detail-actions primary-actions">
+          <button type="button" class="btn-secondary" [disabled]="working()" (click)="addToCart()">
+            Add to cart
+          </button>
+          <button type="button" class="btn-primary" [disabled]="working()" (click)="buyNow()">
+            Buy now
+          </button>
+        </div>
+      </div>
+    </div>
+  } @else if (loading()) {
+    <p>Loading…</p>
+  } @else {
+    <div class="empty-state">
+      <p>We couldn't find that product.</p>
+    </div>
+  }
+</div>

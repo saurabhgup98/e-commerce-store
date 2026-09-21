@@ -1,0 +1,16 @@
+@if (compare.selected().length > 0) {
+  <div class="compare-tray">
+    <div class="compare-tray__items">
+      @for (product of compare.selected(); track product._id) {
+        <div class="compare-tray__item">
+          <span>{{ product.name }}</span>
+          <button type="button" (click)="compare.remove(product._id)" aria-label="Remove from compare">&times;</button>
+        </div>
+      }
+    </div>
+    <div class="compare-tray__actions">
+      <button type="button" class="btn-link" (click)="compare.clear()">Clear</button>
+      <button type="button" class="btn-primary" (click)="viewCompare()">Compare ({{ compare.selected().length }})</button>
+    </div>
+  </div>
+}

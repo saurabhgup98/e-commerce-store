@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc-api",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "declaration": false,
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "types": ["node"],
+    "lib": ["ES2022"]
+  },
+  "include": ["api/**/*.ts", "models/**/*.ts", "scripts/**/*.ts"]
+}

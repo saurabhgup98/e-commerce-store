@@ -1,0 +1,66 @@
+<div class="page container">
+  <h1>Delivery address</h1>
+
+  @if (loading()) {
+    <p>Loading…</p>
+  } @else {
+    @if (addresses().length > 0) {
+      <div class="address-list">
+        @for (address of addresses(); track address._id) {
+          <label class="address-card" [class.selected]="checkout.selectedAddressId() === address._id">
+            <input type="radio" name="address" [checked]="checkout.selectedAddressId() === address._id" (change)="select(address._id)" />
+            <div>
+              <p><strong>{{ address.line1 }}</strong>@if (address.line2) {, {{ address.line2 }}}</p>
+              <p>{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
+              <p>Phone: {{ address.phone }}</p>
+            </div>
+          </label>
+        }
+      </div>
+    }
+
+    @if (!showForm()) {
+      <button type="button" class="btn-link" (click)="showForm.set(true)">+ Add a new address</button>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="saveNewAddress()" class="card address-form">
+        <div class="form-field">
+          <label for="address-line1">Address line 1</label>
+          <input id="address-line1" type="text" formControlName="line1" />
+        </div>
+        <div class="form-field">
+          <label for="address-line2">Address line 2 (optional)</label>
+          <input id="address-line2" type="text" formControlName="line2" />
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="address-city">City</label>
+            <input id="address-city" type="text" formControlName="city" />
+          </div>
+          <div class="form-field">
+            <label for="address-state">State</label>
+            <input id="address-state" type="text" formControlName="state" />
+          </div>
+          <div class="form-field">
+            <label for="address-pincode">Pincode</label>
+            <input id="address-pincode" type="text" formControlName="pincode" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="address-phone">Phone number</label>
+          <input id="address-phone" type="tel" formControlName="phone" />
+        </div>
+        <button type="submit" class="btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving…' : 'Save address' }}
+        </button>
+      </form>
+    }
+
+    @if (errorMessage()) {
+      <p class="form-error">{{ errorMessage() }}</p>
+    }
+
+    <div class="continue-row">
+      <button type="button" class="btn-primary" (click)="continueToPayment()">Continue to payment</button>
+    </div>
+  }
+</div>

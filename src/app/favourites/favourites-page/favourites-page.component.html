@@ -1,0 +1,18 @@
+<div class="page container">
+  <h1>Your favourites</h1>
+
+  @if (loading()) {
+    <p>Loading…</p>
+  } @else if (favourites.products().length === 0) {
+    <div class="empty-state">
+      <p>You haven't favourited anything yet.</p>
+      <a routerLink="/products" class="btn-primary">Browse products</a>
+    </div>
+  } @else {
+    <div class="grid product-grid">
+      @for (product of favourites.products(); track product._id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  }
+</div>

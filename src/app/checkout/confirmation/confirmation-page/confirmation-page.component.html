@@ -1,0 +1,40 @@
+<div class="page container">
+  @if (order(); as order) {
+    <div class="confirmation-banner">
+      <h1>Order confirmed!</h1>
+      <p>Thanks for your order — a confirmation has been placed for order #{{ order._id.slice(-6).toUpperCase() }}.</p>
+    </div>
+
+    <div class="card order-recap">
+      <h2>Order summary</h2>
+      @for (item of order.items; track item.productId) {
+        <div class="summary-row">
+          <span>{{ item.name }} &times; {{ item.quantity }}</span>
+          <span>{{ item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+        </div>
+      }
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ order.totalAmount | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+      </div>
+
+      <h3>Delivering to</h3>
+      <p>
+        {{ order.addressSnapshot.line1 }}@if (order.addressSnapshot.line2) {, {{ order.addressSnapshot.line2 }}}<br />
+        {{ order.addressSnapshot.city }}, {{ order.addressSnapshot.state }} - {{ order.addressSnapshot.pincode }}<br />
+        Phone: {{ order.addressSnapshot.phone }}
+      </p>
+    </div>
+
+    <div class="confirmation-actions">
+      <a routerLink="/orders" class="btn-secondary">View my orders</a>
+      <a routerLink="/products" class="btn-primary">Continue shopping</a>
+    </div>
+  } @else if (loading()) {
+    <p>Loading…</p>
+  } @else {
+    <div class="empty-state">
+      <p>We couldn't find that order.</p>
+    </div>
+  }
+</div>

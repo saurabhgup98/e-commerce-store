@@ -1,0 +1,35 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a routerLink="/" class="brand">NovaTech Electronics</a>
+
+    <nav class="main-nav">
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/compare" routerLinkActive="active">Compare</a>
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/favourites" routerLinkActive="active">
+          Favourites
+          @if (favourites.products().length > 0) {
+            <span class="badge">{{ favourites.products().length }}</span>
+          }
+        </a>
+        <a routerLink="/cart" routerLinkActive="active">
+          Cart
+          @if (cart.itemCount() > 0) {
+            <span class="badge">{{ cart.itemCount() }}</span>
+          }
+        </a>
+        <a routerLink="/orders" routerLinkActive="active">Orders</a>
+      }
+    </nav>
+
+    <div class="auth-area">
+      @if (auth.isLoggedIn()) {
+        <span class="greeting">Hi, {{ displayName() }}</span>
+        <button type="button" class="btn-link" (click)="logout()">Logout</button>
+      } @else {
+        <a routerLink="/login" class="btn-secondary">Login</a>
+        <a routerLink="/signup" class="btn-primary">Sign up</a>
+      }
+    </div>
+  </div>
+</header>

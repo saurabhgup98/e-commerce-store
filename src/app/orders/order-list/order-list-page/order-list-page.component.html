@@ -1,0 +1,27 @@
+<div class="page container">
+  <h1>Your orders</h1>
+
+  @if (loading()) {
+    <p>Loading…</p>
+  } @else if (orders().length === 0) {
+    <div class="empty-state">
+      <p>You haven't placed any orders yet.</p>
+      <a routerLink="/products" class="btn-primary">Browse products</a>
+    </div>
+  } @else {
+    <div class="order-list">
+      @for (order of orders(); track order._id) {
+        <a class="order-card" [routerLink]="['/orders', order._id]">
+          <div>
+            <p class="order-id">Order #{{ order._id.slice(-6).toUpperCase() }}</p>
+            <p class="order-date">{{ order.createdAt | date: 'medium' }}</p>
+          </div>
+          <div class="order-meta">
+            <span class="status-pill" [class]="order.status">{{ order.status | titlecase }}</span>
+            <strong>{{ order.totalAmount | currency: 'INR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>

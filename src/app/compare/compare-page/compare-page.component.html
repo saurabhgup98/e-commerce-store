@@ -1,0 +1,42 @@
+<div class="page container">
+  <h1>Compare products</h1>
+
+  @if (compare.selected().length === 0) {
+    <div class="empty-state">
+      <p>You haven't added any products to compare yet.</p>
+      <a routerLink="/products" class="btn-primary">Browse products</a>
+    </div>
+  } @else {
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            @for (product of compare.selected(); track product._id) {
+              <th>
+                <a [routerLink]="['/products', product._id]">{{ product.name }}</a>
+                <button type="button" class="btn-link" (click)="compare.remove(product._id)">Remove</button>
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Price</th>
+            @for (product of compare.selected(); track product._id) {
+              <td>{{ product.price | currency: 'INR' : 'symbol' : '1.0-0' }}</td>
+            }
+          </tr>
+          @for (key of specKeys(); track key) {
+            <tr>
+              <th>{{ key }}</th>
+              @for (product of compare.selected(); track product._id) {
+                <td>{{ product.specs[key] || '—' }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,52 @@
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.site-header__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+
+  a {
+    color: var(--color-text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+
+    &:hover, &.active {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+  }
+}
+
+.auth-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .greeting {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+}

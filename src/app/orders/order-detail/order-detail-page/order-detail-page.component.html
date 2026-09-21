@@ -1,0 +1,54 @@
+<div class="page container">
+  <a routerLink="/orders" class="back-link">&larr; Back to orders</a>
+
+  @if (order(); as order) {
+    <div class="order-header">
+      <h1>Order #{{ order._id.slice(-6).toUpperCase() }}</h1>
+      <span class="status-pill" [class]="order.status">{{ order.status | titlecase }}</span>
+    </div>
+    <p class="order-date">Placed {{ order.createdAt | date: 'medium' }}</p>
+
+    <div class="card order-items">
+      @for (item of order.items; track item.productId) {
+        <div class="summary-row">
+          <span>{{ item.name }} &times; {{ item.quantity }}</span>
+          <span>{{ item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+        </div>
+      }
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ order.totalAmount | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+      </div>
+    </div>
+
+    <div class="card address-block">
+      <h3>Delivery address</h3>
+      <p>
+        {{ order.addressSnapshot.line1 }}@if (order.addressSnapshot.line2) {, {{ order.addressSnapshot.line2 }}}<br />
+        {{ order.addressSnapshot.city }}, {{ order.addressSnapshot.state }} - {{ order.addressSnapshot.pincode }}<br />
+        Phone: {{ order.addressSnapshot.phone }}
+      </p>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="form-error">{{ errorMessage() }}</p>
+    }
+
+    @if (canCancel() || canReturn()) {
+      <div class="order-actions">
+        @if (canCancel()) {
+          <button type="button" class="btn-danger" [disabled]="working()" (click)="cancelOrder()">Cancel order</button>
+        }
+        @if (canReturn()) {
+          <button type="button" class="btn-secondary" [disabled]="working()" (click)="returnOrder()">Return order</button>
+        }
+      </div>
+    }
+  } @else if (loading()) {
+    <p>Loading…</p>
+  } @else {
+    <div class="empty-state">
+      <p>We couldn't find that order.</p>
+    </div>
+  }
+</div>

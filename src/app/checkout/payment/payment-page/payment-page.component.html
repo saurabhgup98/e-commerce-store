@@ -1,0 +1,32 @@
+<div class="page container">
+  <h1>Payment</h1>
+
+  <div class="payment-layout">
+    <div class="card order-summary">
+      <h2>Order summary</h2>
+      @for (item of cart.items(); track item.productId._id) {
+        <div class="summary-row">
+          <span>{{ item.productId.name }} &times; {{ item.quantity }}</span>
+          <span>{{ item.productId.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+        </div>
+      }
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ cart.subtotal() | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+      </div>
+    </div>
+
+    <div class="card payment-panel">
+      <h2>Pay</h2>
+      <p class="note">This is a test store — clicking Pay always completes the order successfully.</p>
+
+      @if (errorMessage()) {
+        <p class="form-error">{{ errorMessage() }}</p>
+      }
+
+      <button type="button" class="btn-primary" [disabled]="paying() || cart.items().length === 0" (click)="pay()">
+        {{ paying() ? 'Processing…' : 'Pay now' }}
+      </button>
+    </div>
+  </div>
+</div>

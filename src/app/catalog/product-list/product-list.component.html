@@ -1,0 +1,28 @@
+<div class="page container">
+  <h1>Shop electronics</h1>
+
+  <div class="category-tabs">
+    <button type="button" class="tab" [class.active]="activeCategory() === null" (click)="selectCategory(null)">
+      All
+    </button>
+    @for (entry of categories; track entry[0]) {
+      <button type="button" class="tab" [class.active]="activeCategory() === entry[0]" (click)="selectCategory(entry[0])">
+        {{ entry[1] }}
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <p>Loading products…</p>
+  } @else if (products().length === 0) {
+    <div class="empty-state">
+      <p>No products found in this category yet. Check back soon.</p>
+    </div>
+  } @else {
+    <div class="grid product-grid">
+      @for (product of products(); track product._id) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,42 @@
+.confirmation-banner {
+  background: #e4f6ea;
+  border: 1px solid #bfe6cc;
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+
+  h1 {
+    color: var(--color-success);
+  }
+  p {
+    margin: 0;
+  }
+}
+
+.order-recap {
+  max-width: 520px;
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+
+  &.total {
+    border-bottom: none;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+}
+
+.order-recap h3 {
+  margin-top: 20px;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+}
