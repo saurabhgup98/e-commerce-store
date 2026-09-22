@@ -49,7 +49,9 @@ export class OrderDetailPageComponent implements OnInit {
     this.working.set(true);
     this.errorMessage.set('');
     try {
-      const res = await firstValueFrom(this.http.post<{ order: Order }>(`/api/orders/${order._id}/cancel`, {}));
+      const res = await firstValueFrom(
+        this.http.post<{ order: Order }>(`/api/orders/${order._id}`, { action: 'cancel' })
+      );
       this.order.set(res.order);
     } catch (err: any) {
       this.errorMessage.set(err?.error?.error || 'Could not cancel this order.');
@@ -64,7 +66,9 @@ export class OrderDetailPageComponent implements OnInit {
     this.working.set(true);
     this.errorMessage.set('');
     try {
-      const res = await firstValueFrom(this.http.post<{ order: Order }>(`/api/orders/${order._id}/return`, {}));
+      const res = await firstValueFrom(
+        this.http.post<{ order: Order }>(`/api/orders/${order._id}`, { action: 'return' })
+      );
       this.order.set(res.order);
     } catch (err: any) {
       this.errorMessage.set(err?.error?.error || 'Could not start a return for this order.');

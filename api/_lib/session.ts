@@ -1,14 +1,16 @@
-import { serialize } from "cookie";
+import { stringifySetCookie } from "cookie";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { AUTH_COOKIE_NAME } from "./constants";
-import { verifySession, type SessionPayload } from "./auth";
+import { AUTH_COOKIE_NAME } from "./constants.js";
+import { verifySession, type SessionPayload } from "./auth.js";
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env["NODE_ENV"] === "production";
 
 export function setSessionCookie(res: VercelResponse, token: string) {
   res.setHeader(
     "Set-Cookie",
-    serialize(AUTH_COOKIE_NAME, token, {
+    stringifySetCookie({
+      name: AUTH_COOKIE_NAME,
+      value: token,
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",
@@ -21,7 +23,9 @@ export function setSessionCookie(res: VercelResponse, token: string) {
 export function clearSessionCookie(res: VercelResponse) {
   res.setHeader(
     "Set-Cookie",
-    serialize(AUTH_COOKIE_NAME, "", {
+    stringifySetCookie({
+      name: AUTH_COOKIE_NAME,
+      value: "",
       httpOnly: true,
       secure: isProd,
       sameSite: "lax",

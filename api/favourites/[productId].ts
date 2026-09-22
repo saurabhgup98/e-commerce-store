@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { connectDB } from "../_lib/db";
-import { requireSession } from "../_lib/session";
-import Favourite from "../../models/Favourite";
+import { connectDB } from "../_lib/db.js";
+import { requireSession } from "../_lib/session.js";
+import Favourite from "../../models/Favourite.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "DELETE") {

@@ -1,5 +1,7 @@
-import { Schema, model, models } from "mongoose";
-import { ORDER_STATUSES } from "../api/_lib/constants";
+import mongoose from "mongoose";
+import { ORDER_STATUSES } from "../api/_lib/constants.js";
+
+const { Schema, model, models } = mongoose;
 
 const orderSchema = new Schema(
   {

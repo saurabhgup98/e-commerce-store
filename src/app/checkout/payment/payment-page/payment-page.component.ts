@@ -45,7 +45,7 @@ export class PaymentPageComponent implements OnInit {
       const order = createRes.order;
 
       const payRes = await firstValueFrom(
-        this.http.post<{ order: Order }>(`/api/orders/${order._id}/pay`, {})
+        this.http.post<{ order: Order }>(`/api/orders/${order._id}`, { action: 'pay' })
       );
 
       this.cart.clearLocal();

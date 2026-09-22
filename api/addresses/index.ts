@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
-import { connectDB } from "../_lib/db";
-import { requireSession } from "../_lib/session";
-import Address from "../../models/Address";
+import { connectDB } from "../_lib/db.js";
+import { requireSession } from "../_lib/session.js";
+import Address from "../../models/Address.js";
 
 const createSchema = z.object({
   line1: z.string().trim().min(1),

@@ -1,10 +1,10 @@
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
-import { connectDB } from "../api/_lib/db";
-import { hashPassword } from "../api/_lib/auth";
-import Product from "../models/Product";
-import User from "../models/User";
+import { connectDB } from "../api/_lib/db.js";
+import { hashPassword } from "../api/_lib/auth.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
 
 async function main() {
   await connectDB();
@@ -34,7 +34,7 @@ async function main() {
     await Product.findOneAndUpdate(
       { name: product.name },
       { $set: product },
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: "after" }
     );
     console.log(`Upserted product: ${product.name}`);
   }

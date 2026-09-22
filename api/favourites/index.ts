@@ -1,8 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
-import { connectDB } from "../_lib/db";
-import { requireSession } from "../_lib/session";
-import Favourite from "../../models/Favourite";
+import { connectDB } from "../_lib/db.js";
+import { requireSession } from "../_lib/session.js";
+import Favourite from "../../models/Favourite.js";
+// Registers the Product schema in this function's isolated module graph —
+// required for .populate("productIds") to resolve, since each Vercel
+// function bundles its own dependencies independently.
+import "../../models/Product.js";
 
 const addSchema = z.object({ productId: z.string().min(1) });
 

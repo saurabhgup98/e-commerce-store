@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { connectDB } from "../_lib/db";
-import { PRODUCT_CATEGORIES } from "../_lib/constants";
-import Product from "../../models/Product";
+import { connectDB } from "../_lib/db.js";
+import { PRODUCT_CATEGORIES } from "../_lib/constants.js";
+import Product from "../../models/Product.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
